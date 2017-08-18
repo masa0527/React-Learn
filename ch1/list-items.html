@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <title>list-items</title>
@@ -13,9 +13,7 @@
   class RList extends React.Component {
     render() {
       const items = this.props.items.split(',');
-      const itemsObj = items.map(e => {
-        return <li>{e}</li>;
-      });
+      const itemsObj = items.map(e => <li>{e}</li> );
       let title = this.props.title;
       if (!title) title = 'LIST';
       return (
