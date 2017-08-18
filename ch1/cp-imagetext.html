@@ -34,10 +34,12 @@
     render() {
       const label = this.props.label;
       const url = this.getImageURL();
-      return (<div style={this.divStyle}>
-        <img src={url} style={this.imgStyle}/>
-        <span>{label}</span>
-      </div>)
+      return (
+        <div style={this.divStyle}>
+          <img src={url} style={this.imgStyle}/>
+          <span>{label}</span>
+        </div>
+      );
     }
   }
 
