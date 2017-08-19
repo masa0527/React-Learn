@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>st-checkbox</title>
+  <script src="https://unpkg.com/react@15.6.1/dist/react.min.js"></script>
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+  <style>
+    body {
+      font-size: 36px;
+    }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+  class CBox extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        checked: false
+      };
+    }
+
+    render() {
+      let mark = '□';
+      let bStyle = {
+        fontWeight: 'normal',
+      };
+      if (this.state.checked) {
+        mark = '■';
+        bStyle = {
+          fontWeight: 'bold',
+        };
+      }
+
+      const clickHandler = () => {
+        const newValue = !this.state.checked;
+        this.setState({
+          checked: newValue
+        });
+      };
+
+      return (
+        <div onClick={clickHandler} style={bStyle}>
+          {mark} {this.props.label}
+        </div>
+      );
+    }
+  }
+
+  ReactDOM.render(
+    <div>
+      <CBox label="Apple"/>
+      <CBox label="Banana"/>
+      <CBox label="Orange"/>
+      <CBox label="Mango"/>
+    </div>,
+    document.getElementById('root')
+  );
+</script>
+</body>
+</html>
