@@ -1,4 +1,4 @@
-#StopWatch
+# StopWatch
 
 ```
 npm install
