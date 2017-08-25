@@ -1,5 +1,7 @@
 # compiled output
 /dist
+bundle.js
+bundle.js.map
 
 # dependencies
 /node_modules
