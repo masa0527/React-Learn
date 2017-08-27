@@ -12,12 +12,10 @@ export default class ValueInput extends Component {
     const v = e.target.value;
     const newValue = v.replace(/[^0-9.]+/g, '');
     this.setState({value: newValue});
-    if (this.props.onChange) {
-      this.props.onChange({
-        target: this,
-        value: newValue
-      })
-    }
+    if (this.props.onChange) this.props.onChange({
+      target: this,
+      value: newValue
+    })
   }
 
   componentWillReceiveProps(nextProps) {
