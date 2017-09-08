@@ -6,36 +6,71 @@
   <script src="https://unpkg.com/react@15.6.1/dist/react.min.js"></script>
   <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+  <style>
+    #root {
+      font-size: 100px;
+    }
+    #info {
+      font-size: 32px;
+    }
+  </style>
 </head>
 <body>
 <div id="root"></div>
+<div id="info"></div>
 <script type="text/babel">
-  const TitleParts = props => (
-    <div style={{backgroundColor: 'red', color: 'white'}}>
-      <h3>{props.title}</h3>
-    </div>
-  );
+  class ColorBox extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        index: 0,
+        colors: ['red', 'blue', 'green', 'yellow', 'black']
+      };
+    }
 
-  const ContentParts = props => (
-    <div style={{border: '1px solid blue', margin: 15}}>
-      <div>🐱にゃーん：{props.body}</div>
-    </div>
-  );
+    render() {
+      const colors = this.state.colors;
+      const index = this.state.index;
+      const color = (index >= 0 ) ? colors[index] : '';
+      const items = colors.map(c => {
+        let bs = '1px solid white';
+        if (c === color) {
+          bs = '1px solid black';
+        }
+        const cStyle = {
+          color: c,
+          border: bs
+        };
+        const clickHandler = (e) => {
+          const c = e.target.style.color;
+          const i = this.state.colors.indexOf(c);
+          this.setState({index: i});
+          if (this.props.onColorChange) {
+            this.props.onColorChange({color: c});
+          }
+        };
+        return (
+          <span onClick={clickHandler}
+                style={cStyle}>■</span>
+        );
+      });
+      return (
+        <div>{items}</div>
+      );
+    }
+  }
 
-  const Book = props => (
-    <div>
-      <TitleParts title={props.title}/>
-      <ContentParts body={props.body}/>
-    </div>
-  );
-
-  ReactDOM.render((
-    <div>
-      <Book title="ほげほげ" body="😅😅😅😅😅😅😅😅😅"/>
-      <Book title="ふがふが" body="😡😡😡😡😡😡😡😡😡😡"/>
-      <Book title="U・x・U" body="😈😈😈😈😈😈😈😈😈😈😈😈😈😈"/>
-    </div>
-  ), document.getElementById('root'));
+  const colorHandler = (e) => {
+    ReactDOM.render(
+      <span>{e.color}</span>,
+      document.getElementById('info')
+    );
+  };
+  const dom = <div>
+    <ColorBox id="cb" onColorChange={colorHandler}/>
+  </div>;
+  ReactDOM.render(dom,
+    document.getElementById('root'))
 </script>
 </body>
 </html>
