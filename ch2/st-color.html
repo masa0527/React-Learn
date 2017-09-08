@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>cp-a</title>
+  <script src="https://unpkg.com/react@15.6.1/dist/react.min.js"></script>
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+  const TitleParts = props => (
+    <div style={{backgroundColor: 'red', color: 'white'}}>
+      <h3>{props.title}</h3>
+    </div>
+  );
+
+  const ContentParts = props => (
+    <div style={{border: '1px solid blue', margin: 15}}>
+      <div>🐱にゃーん：{props.body}</div>
+    </div>
+  );
+
+  const Book = props => (
+    <div>
+      <TitleParts title={props.title}/>
+      <ContentParts body={props.body}/>
+    </div>
+  );
+
+  ReactDOM.render((
+    <div>
+      <Book title="ほげほげ" body="😅😅😅😅😅😅😅😅😅"/>
+      <Book title="ふがふが" body="😡😡😡😡😡😡😡😡😡😡"/>
+      <Book title="U・x・U" body="😈😈😈😈😈😈😈😈😈😈😈😈😈😈"/>
+    </div>
+  ), document.getElementById('root'));
+</script>
+</body>
+</html>
