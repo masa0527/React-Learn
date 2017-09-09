@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import request from 'superagent';
 import logo from './logo.svg';
 import './App.css';
@@ -8,18 +8,20 @@ class App extends Component {
     super(props);
     this.state = {
       items: null,
+      value: props.value
     };
   }
+
   componentWillMount() {
     request.get('./fruits.json')
       .accept('application/json')
       .end((err, res) => {
-        this.loadedJson(err,res);
+        this.loadedJson(err, res);
       });
   }
 
   loadedJson(err, res) {
-    if(err) {
+    if (err) {
       console.log(err);
       return;
     }
@@ -28,8 +30,13 @@ class App extends Component {
     });
 
   }
+
+  doChange(e) {
+    this.setState({value: e.target.value})
+  }
+
   render() {
-    if(!this.state.items) {
+    if (!this.state.items) {
       return <div className='App'>読み込み中</div>
     }
     const options = this.state.items.map(e => {
@@ -38,12 +45,13 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo" alt="logo"/>
           <h2>Welcome to React</h2>
         </div>
         <div className='App-intro'>
-          果物: <select>{options}</select>
+          果物: <select value={this.state.value} onChange={e => this.doChange(e)}>{options}</select>
         </div>
+        <div>{this.state.value}</div>
       </div>
     );
   }
