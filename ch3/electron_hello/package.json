@@ -19,6 +19,7 @@
     "webpack": "^3.5.6"
   },
   "dependencies": {
+    "photon": "git+https://github.com/connors/photon.git",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }
