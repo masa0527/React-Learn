@@ -1,0 +1,13 @@
+# compiled output
+cli-app.json
+token.json
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+
+#System Files
+.DS_Store
+Thumbs.db
