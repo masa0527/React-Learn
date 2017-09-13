@@ -4,7 +4,7 @@ token.json
 
 # dependencies
 /node_modules
-
+/out
 # IDEs and editors
 /.idea
 
