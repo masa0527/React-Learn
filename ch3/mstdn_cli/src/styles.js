@@ -1,6 +1,9 @@
 const mainColor = '#89C9FA';
 const mainBorder = '1px solid silver';
 export const styles = {
+  main: {
+    fontFamily: '-apple-system,BlinkMacSystemFont,"Helvetica Neue","メイリオ",Meiryo,"ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN",Arial,sans-serif'
+  },
   title: {
     borderBottom: mainBorder,
     backgroundColor: mainColor,

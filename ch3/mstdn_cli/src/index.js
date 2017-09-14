@@ -69,7 +69,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
+      <div style={styles.main}>
         <div style={styles.editorPad}>
           <h1 style={styles.title}>マストドンのクライアント</h1>
           <textarea
