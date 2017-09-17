@@ -17,6 +17,7 @@ class MindSweeper {
           this.table.turnAt(i,j);
           this.panel.paint();
           if (this.table.isGameclear()) {
+            message.style.color = 'red';
             message.innerHTML = 'Game Clear!';
             this.panel.stopInputListeners();
           } else if (this.table.isGameover()) {
