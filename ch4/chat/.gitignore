@@ -1,5 +1,6 @@
 # compiled output
 /public/bundle.js
+/public/bundle.js.map
 
 # dependencies
 /node_modules
