@@ -1,9 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Container from 'muicss/lib/react/container';
+import Panel from 'muicss/lib/react/panel';
+import Appbar from 'muicss/lib/react/appbar';
+import Button from 'muicss/lib/react/button';
+import Input from 'muicss/lib/react/input';
 import styles from './styles.js'
 import socketio from 'socket.io-client'
 
-const socket = socketio.connect('http://localhost:3001')
+const socket = socketio.connect('http://localhost:3001');
 
 class ChatForm extends React.Component {
   constructor(props) {
@@ -29,15 +34,13 @@ class ChatForm extends React.Component {
 
   render() {
     return (
-      <div style={styles.form}>
-        名前:<br/>
-        <input value={this.state.name}
+      <Panel>
+        <Input label='名前' floatingLabel={true} value={this.state.name}
                onChange={e => this.nameChanged(e)}/><br/>
-        メッセージ:<br/>
-        <input value={this.state.message}
+        <Input label='メッセージ' floatingLabel={true} value={this.state.message}
                onChange={e => this.messageChanged(e)}/><br/>
-        <button onClick={e => this.send()}>送信</button>
-      </div>
+        <Button color='primary' onClick={e => this.send()}>送信</Button>
+      </Panel>
     )
   }
 }
@@ -62,18 +65,25 @@ class ChatApp extends React.Component {
 
   render() {
     const messages = this.state.logs.map(e => (
-      <div key={e.key} style={styles.log}>
-        <span style={styles.name}>{e.name}</span>
-        <span style={styles.msg}>: {e.message}</span>
-        <p style={{clear: 'both'}}/>
+      <div key={e.key}>
+        <div className="mui--divider-bottom">
+          <span className='mui--text-display1 mui--text-accent'>{e.name}</span>
+          <span className='mui--text-display1'>：</span>
+          <span className='mui--text-display1'>{e.message}</span>
+        </div>
       </div>
+
     ));
     return (
-      <div>
-        <h1 style={styles.h1}>リアルタイムチャット</h1>
+      <Container fluid={true}>
+        <Appbar className="mui--z2">
+          <div style={styles.h1} className='mui--text-display1'>リアルタイムチャット</div>
+        </Appbar>
         <ChatForm/>
-        <div>{messages}</div>
-      </div>
+        <Panel>
+          {messages}
+        </Panel>
+      </Container>
     )
   }
 }
