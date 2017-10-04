@@ -1,12 +1,12 @@
 const path = require('path');
-const neDB = require('nedb');
+const NeDB = require('nedb');
 
-const userDB = new neDB({
+const userDB = new NeDB({
   filename: path.join(__dirname, 'user.db'),
   autoload: true
 });
 
-const timeLineDB = new neDB({
+const timelineDB = new NeDB({
   filename: path.join(__dirname, 'timeline.db'),
   autoload: true
 });
@@ -26,7 +26,7 @@ function getAuthToken(userid) {
   return getHash(`${userid}:${time}`);
 }
 
-// ユーザー検索
+// ユーザ検索
 function getUser(userid, callback) {
   userDB.findOne({userid}, (err, user) => {
     if (err || user === null) {
@@ -36,12 +36,12 @@ function getUser(userid, callback) {
   })
 }
 
-// ユーザー追加
-function addUser(userid, pw, callback) {
-  const hash = getHash(pw);
+// ユーザの新規追加
+function addUser(userid, passwd, callback) {
+  const hash = getHash(passwd);
   const token = getAuthToken(userid);
   const regDoc = {userid, hash, token, friends: {}};
-  userDB.insert(regDoc, (err, newDoc) => {
+  userDB.insert(regDoc, (err, newdoc) => {
     if (err) {
       return callback(null);
     }
@@ -50,18 +50,19 @@ function addUser(userid, pw, callback) {
 }
 
 // ログイン
-function login(userid, pw, callback) {
-  const hash = getHash(pw);
+function login(userid, passwd, callback) {
+  const hash = getHash(passwd);
   const token = getAuthToken(userid);
   getUser(userid, (user) => {
     if (!user || user.hash !== hash) {
-      return callback(new Error('認証エラー！'), null);
+      return callback(new Error('認証エラー！'), null)
     }
     user.token = token;
     updateUser(user, (err) => {
       if (err) {
-        return callback(err, null)
+        return callback(err, null);
       }
+      callback(null, token)
     })
   })
 }
@@ -70,7 +71,7 @@ function login(userid, pw, callback) {
 function checkToken(userid, token, callback) {
   getUser(userid, (user) => {
     if (!user || user.token !== token) {
-      return callback(new Error('認証失敗！'), null);
+      return callback(new Error('認証に失敗！'), null)
     }
     callback(null, user)
   })
@@ -84,23 +85,21 @@ function updateUser(user, callback) {
   })
 }
 
-function getFriendsTimeLine(userid, token, callback) {
+function getFriendsTimeline(userid, token, callback) {
   checkToken(userid, token, (err, user) => {
     if (err) {
       return callback(new Error('認証に失敗！'), null);
     }
     const friends = [];
-    for (const i in user.friends) {
-      friends.push(i)
-    }
+    for (const f in user.friends) friends.push(f)
     friends.push(userid);
-    timeLineDB
+    timelineDB
       .find({userid: {$in: friends}})
       .sort({time: -1})
       .limit(20)
       .exec((err, docs) => {
         if (err) {
-          callback(new Error('DBエラー！'), null);
+          callback(new Error('DBエラー'), null);
           return
         }
         callback(null, docs)
@@ -109,5 +108,5 @@ function getFriendsTimeLine(userid, token, callback) {
 }
 
 module.exports = {
-  userDB, timeLineDB, getUser, addUser, login, checkToken, updateUser, getFriendsTimeLine
-};
+  userDB, timelineDB, getUser, addUser, login, checkToken, updateUser, getFriendsTimeline
+}

@@ -22,9 +22,7 @@ export default class SNSLogin extends React.Component {
         passwd: this.state.passwd
       })
       .end((err, res) => {
-        if (err) {
-          return
-        }
+        if (err) return;
         const r = res.body;
         console.log(r);
         if (r.status && r.token) {
@@ -33,7 +31,7 @@ export default class SNSLogin extends React.Component {
           this.setState({jump: '/timeline'});
           return
         }
-        this.setState({msg: r.msg});
+        this.setState({msg: r.msg})
       })
   }
 
@@ -46,18 +44,18 @@ export default class SNSLogin extends React.Component {
       <div>
         <h1>ログイン</h1>
         <div style={styles.login}>
-          ユーザID：<br/>
+          ユーザID:<br/>
           <input value={this.state.userid}
                  onChange={e => changed('userid', e)}/><br/>
-          パスワード：<br/>
-          <input type="password" value={this.state.passwd}
+          パスワード:<br/>
+          <input type='password' value={this.state.passwd}
                  onChange={e => changed('passwd', e)}/><br/>
           <button onClick={e => this.api('login')}>ログイン</button>
           <br/>
           <p style={styles.error}>{this.state.msg}</p>
           <p>
             <button onClick={e => this.api('addUser')}>
-              ユーザ登録（初回）
+              ユーザ登録(初回)
             </button>
           </p>
         </div>
