@@ -10,7 +10,7 @@
   "dependencies": {
     "react-scripts": "^0.9.5",
     "standard": "^10.0.2",
-    "superagent": "^3.5.2"
+    "superagent": "^5.0.2"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
